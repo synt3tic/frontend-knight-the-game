@@ -1,9 +1,7 @@
 <template>
   <div
     class="slot"
-    :class="{
-      slot_large: slotSize === 'large', 
-      slot_medium: slotSize === 'medium'}"
+    :class="{slot_medium: slotSize === 'medium', slot_small: slotSize === 'small', slot_large: slotSize === 'large'}"
   ></div>
 </template>
 
@@ -26,14 +24,19 @@ export default {
   border-radius: 15px;
 }
 
-.slot_medium {
+.slot_small {
   width: 66px;
   height: 66px;
 }
 
-.slot_large {
+.slot_medium {
   width: 130px;
   height: 130px;
+}
+
+.slot_large {
+  width: 72px;
+  height: 145px;
 }
 
 .slot:hover {

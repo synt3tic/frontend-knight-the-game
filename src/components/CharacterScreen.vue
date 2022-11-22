@@ -1,18 +1,22 @@
 <template>
-  <div class="main">
-    <div class="main__block">
-      <h2 class="main__text">Character</h2>
-      <div class="character-block">
-        <div class="character-block__character"></div>
-        <div class="character-block__equip"></div>
+  <div class="character-screen">
+    <div class="character-screen__container">
+      <h2 class="character-screen__header-text">Character</h2>
+      <div class="character-container">
+        <div class="character-container__character">
+          <the-character />
+        </div>
+        <div class="character-container__equip">
+          <inventory-slot v-for="slot in 2" :key="slot" slotSize="large" />
+        </div>
       </div>
-      <quick-inventory></quick-inventory>
-      <character-information></character-information>
+      <quick-inventory />
+      <character-information />
     </div>
-    <div class="main__block">
-      <h2 class="main__text">Inventory</h2>
-      <div class="main__slots">
-        <inventory-slot v-for="slot in 25" :key="slot" :slotSize="'large'"></inventory-slot>
+    <div class="character-screen__container">
+      <h2 class="character-screen__header-text">Inventory</h2>
+      <div class="character-screen__slots">
+        <inventory-slot v-for="slot in inventorySlotsAmount" :key="slot" slotSize="medium" />
       </div>
     </div>
   </div>
@@ -21,24 +25,35 @@
 <script>
 import QuickInventory from "@/components/QuickInventory.vue";
 import CharacterInformation from "@/components/CharacterInformation.vue";
+import TheCharacter from "@/components/TheCharacter.vue";
+import config from "@/config";
 
 export default {
   components: {
     QuickInventory,
     CharacterInformation,
+    TheCharacter,
+  },
+  computed: {
+    inventorySlotsAmount() {
+      return config.inventorySlotsAmount;
+    },
+    characterEquipSlotsAmount() {
+      return config.characterEquipSlotsAmount;
+    },
   },
 };
 </script>
 
 <style scoped>
-.main {
+.character-screen {
   display: flex;
   justify-content: center;
   margin-top: 54px;
   gap: 54px;
 }
 
-.main__block {
+.character-screen__container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,24 +62,28 @@ export default {
   background: #7a5737;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
+  gap: 30px;
   color: #f9c290;
 }
 
-.main__text {
-  margin: 25px;
+.character-screen__header-text {
+  margin: 30px 0 0 0;
   font-weight: 400;
   font-size: 36px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.character-block {
+.character-container {
   display: flex;
   width: 708px;
   height: 357px;
   gap: 24px;
 }
 
-.character-block__character {
+.character-container__character {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 476px;
   height: 357px;
   background: #866241;
@@ -72,7 +91,11 @@ export default {
   border-radius: 15px;
 }
 
-.character-block__equip {
+.character-container__equip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
   width: 208.5px;
   height: 357px;
   background: #866241;
@@ -80,7 +103,7 @@ export default {
   border-radius: 15px;
 }
 
-.main__slots {
+.character-screen__slots {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

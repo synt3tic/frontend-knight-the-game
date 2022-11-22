@@ -1,6 +1,6 @@
 <template>
-  <div class="info-block">
-    <div v-for="info in characterInformation" :key="info.name" class="text-info">
+  <div class="information-container">
+    <div v-for="info in characterInformation" :key="info.name" class="information-container__text">
       <div>{{info.name}}</div>
       <div>{{info.value}}</div>
     </div>
@@ -8,38 +8,44 @@
 </template>
 
 <script>
+import config from "@/config";
+
 export default {
   data() {
     return {
       characterInformation: [
         {
           name: "Damage",
-          value: 15,
         },
         {
           name: "Armor",
-          value: 10,
         },
         {
           name: "Regeneration",
-          value: 1,
         },
         {
           name: "Critical Damage",
-          value: 5,
         },
         {
           name: "Level",
-          value: 1,
         },
       ],
     };
+  },
+
+  mounted() {
+    this.characterInformation[0].value = config.charactersBaseDamage;
+    this.characterInformation[1].value = config.charactersBaseArmor;
+    this.characterInformation[2].value = config.charactersBaseRegeneration;
+    this.characterInformation[3].value =
+      config.charactersBaseCriticalDamageChance;
+    this.characterInformation[4].value = config.charactersBaseLevel;
   },
 };
 </script>
 
 <style scoped>
-.info-block {
+.information-container {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -47,19 +53,19 @@ export default {
   justify-content: center;
   width: 708px;
   height: 222px;
-  margin-top: 30px;
   background: #866241;
   box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
-.text-info {
+.information-container__text {
   display: flex;
   justify-content: space-between;
   gap: 40px;
   height: 46px;
   font-size: 20px;
-  width: 203.82px;
-  height: 45.54px;
+  width: 204px;
+  height: 46px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 </style>

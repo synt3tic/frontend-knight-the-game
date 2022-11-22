@@ -3,13 +3,21 @@
     <h3 class="quick-inventory__header">Quick Inventory</h3>
     <button class="quick-inventory__button">?</button>
     <div class="quick-inventory__slots">
-      <inventory-slot v-for="slot in 5" :key="slot" :slotSize="'medium'"></inventory-slot>
+      <inventory-slot v-for="slot in quickInventorySlotsAmount" :key="slot" :slotSize="'small'"></inventory-slot>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import config from "@/config";
+
+export default {
+  computed: {
+    quickInventorySlotsAmount() {
+      return config.quickInventorySlotsAmount;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -17,9 +25,8 @@ export default {};
   display: flex;
   align-items: center;
   gap: 33px;
-  margin-top: 30px;
   width: 708px;
-  height: 88.5px;
+  height: 105px;
   background: #866241;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
