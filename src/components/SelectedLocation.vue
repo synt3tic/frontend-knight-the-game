@@ -1,6 +1,6 @@
 <template>
-  <div class="modal">
-    <div class="modal__window">
+  <div class="modal" @click="hideModal">
+    <div @click.stop class="modal__window">
       <h2 class="modal__header">Location 1</h2>
       <div class="modal__location-description">
         <img class="location__image" src="../images/background.png" alt="location-image" />
@@ -51,6 +51,11 @@ export default {
       ],
       locationInfoValues: ["Easy", "1", "2", "Not Passed"],
     };
+  },
+  methods: {
+    hideModal() {
+      this.$emit("hideModal");
+    },
   },
 };
 </script>

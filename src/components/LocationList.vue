@@ -12,7 +12,7 @@
 export default {
   methods: {
     openLocation() {
-      console.log("xui");
+      this.$emit("openModal");
     },
   },
 };

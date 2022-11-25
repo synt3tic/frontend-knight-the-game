@@ -8,9 +8,14 @@
 </template>
 
 <script>
-import config from "@/config";
+import config from "@/data/config";
 
 export default {
+  props: {
+    equipItems: {
+      type: Array,
+    },
+  },
   data() {
     return {
       characterInformation: [

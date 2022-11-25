@@ -1,20 +1,34 @@
 <template>
   <div class="quick-inventory">
     <h3 class="quick-inventory__header">Quick Inventory</h3>
-    <button class="quick-inventory__button">?</button>
+    <button @click="showModal" class="quick-inventory__button">?</button>
     <div class="quick-inventory__slots">
-      <inventory-slot v-for="slot in quickInventorySlotsAmount" :key="slot" :slotSize="'small'"></inventory-slot>
+      <inventory-slot
+        v-for="item in quickInventorySlots"
+        :key="item.id"
+        slotSize="small"
+        :item="item"
+        @moveItem="moveItem"
+        @deleteItem="deleteItem"
+      ></inventory-slot>
     </div>
   </div>
 </template>
 
 <script>
-import config from "@/config";
-
 export default {
-  computed: {
-    quickInventorySlotsAmount() {
-      return config.quickInventorySlotsAmount;
+  props: {
+    quickInventorySlots: {
+      type: Array,
+      require: true,
+    },
+  },
+  methods: {
+    moveItem(item) {
+      this.$emit("moveItem", item);
+    },
+    deleteItem(item) {
+      this.$emit("deleteItem", item);
     },
   },
 };

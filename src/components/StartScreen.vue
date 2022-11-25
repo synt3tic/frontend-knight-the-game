@@ -13,8 +13,8 @@
 export default {
   methods: {
     startGame() {
-      this.$emit("startGame");
       this.$router.push("/character");
+      this.$emit("startGame");
     },
   },
 };

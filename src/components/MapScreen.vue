@@ -1,8 +1,8 @@
 <template>
   <div class="map-screen">
-    <location-list />
+    <location-list @openModal="changeModalStatus" />
     <the-map>
-      <selected-location v-if="isModalActive" />
+      <selected-location v-if="isModalActive" @hideModal="changeModalStatus" />
     </the-map>
     <div class="map-screen__map-legend">
       <div v-for="(indicator, index) in indicatorColors" :key="index" class="map-legend__list">
@@ -49,6 +49,11 @@ export default {
       ],
       isModalActive: false,
     };
+  },
+  methods: {
+    changeModalStatus() {
+      this.isModalActive = !this.isModalActive;
+    },
   },
 };
 </script>
