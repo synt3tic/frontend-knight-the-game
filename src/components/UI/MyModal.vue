@@ -1,6 +1,6 @@
 <template>
   <div class="modal" @click="hideModal">
-    <div @click.stop class="modal__window"></div>
+    <div class="modal__window" @click.stop></div>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
   width: 566px;
   height: 454.66px;
   background: #6c4d30;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 </style>

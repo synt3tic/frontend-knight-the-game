@@ -1,15 +1,29 @@
 <template>
   <div class="main">
     <h2 class="main__header">Locations</h2>
-    <div class="main__location">
-      <h3 class="location__text" @click="openLocation">Location</h3>
+    <div 
+    v-for="location in locationList" 
+    :key="location.id" 
+    class="main__location"
+    >
+      <h3 class="location__text" @click="openLocation">{{  location.name  }}</h3>
       <div class="location__indicator"></div>
     </div>
   </div>
 </template>
 
 <script>
+import locations from '@/data/locations';
+
 export default {
+  data() {
+    return {
+      locationList: [],
+    }
+  },
+  mounted() {
+    this.locationList = locations
+  },
   methods: {
     openLocation() {
       this.$emit("openModal");
@@ -26,7 +40,7 @@ export default {
   width: 284.11px;
   height: 877.5px;
   background: #7a5737;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
@@ -35,7 +49,7 @@ export default {
   font-weight: 400;
   text-align: center;
   color: #f9c290;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .main__header:hover {
@@ -68,7 +82,7 @@ export default {
   background: #ff9b41;
   border: 1px solid #000000;
   border-radius: 50%;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .location__indicator_passed {

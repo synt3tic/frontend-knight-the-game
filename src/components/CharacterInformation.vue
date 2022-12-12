@@ -1,8 +1,12 @@
 <template>
   <div class="information-container">
-    <div v-for="info in characterInformation" :key="info.name" class="information-container__text">
-      <div>{{info.name}}</div>
-      <div>{{info.value}}</div>
+    <div
+    v-for="info in updateCurrentCharacteristics"
+    :key="info.name"
+    class="information-container__text"
+    >
+      <div>{{  info.name  }}</div>
+      <div>{{  info.value  }}</div>
     </div>
   </div>
 </template>
@@ -18,35 +22,42 @@ export default {
   },
   data() {
     return {
-      characterInformation: [
-        {
-          name: "Damage",
-        },
-        {
-          name: "Armor",
-        },
-        {
-          name: "Regeneration",
-        },
-        {
-          name: "Critical Damage",
-        },
-        {
-          name: "Level",
-        },
-      ],
+      characterInformation: [],
+      characteristic: ['damage', 'armor', 'regeneration', 'criticalDamage'],
     };
   },
-
   mounted() {
-    this.characterInformation[0].value = config.charactersBaseDamage;
-    this.characterInformation[1].value = config.charactersBaseArmor;
-    this.characterInformation[2].value = config.charactersBaseRegeneration;
-    this.characterInformation[3].value =
-      config.charactersBaseCriticalDamageChance;
-    this.characterInformation[4].value = config.charactersBaseLevel;
+    this.characterInformation = config.basicCharacterStats
   },
-};
+  methods: {
+    calculateIncreasedCharacteristics(items) {
+      const updatedCharacterCharacteristics = [];
+      items.forEach(el => {
+        for (let key in el) {
+          if (this.characteristic.includes(key)) {
+            if (key in updatedCharacterCharacteristics) {
+              updatedCharacterCharacteristics[key] += el[key];
+            } else {
+              updatedCharacterCharacteristics[key] = el[key];
+            }
+          }
+        }
+      });
+      return updatedCharacterCharacteristics;
+    },
+  },
+  computed: {
+    updateCurrentCharacteristics() {
+      const increasedCharacteristics = this.calculateIncreasedCharacteristics(this.equipItems)
+      return this.characterInformation.map(el => {
+        const currentIncreasedProperty = increasedCharacteristics[el.key];
+        const newCharacteristics =  {...el};
+        newCharacteristics.value += currentIncreasedProperty
+        return newCharacteristics
+      });
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -66,11 +77,13 @@ export default {
 .information-container__text {
   display: flex;
   justify-content: space-between;
+  align-self: flex-start;
+  margin-left: 40px;
   gap: 40px;
   height: 46px;
   font-size: 20px;
   width: 204px;
   height: 46px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 </style>

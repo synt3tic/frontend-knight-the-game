@@ -79,7 +79,7 @@ export default {
   width: 897px;
   height: 736px;
   background: rgba(122, 87, 55, 0.95);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
@@ -95,7 +95,7 @@ export default {
 }
 
 .location__image {
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 15px;
 }
 
@@ -114,7 +114,7 @@ export default {
   line-height: 120%;
   letter-spacing: 0.02em;
   color: #f9c290;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   width: 245px;
   height: 230px;
 }
@@ -143,7 +143,7 @@ export default {
   font-size: 20px;
   text-align: center;
   color: #f9c290;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .text__list {
@@ -162,7 +162,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   color: #f9c290;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .text__green {
@@ -191,6 +191,6 @@ export default {
   height: 52.5px;
   font-weight: 400;
   font-size: 20px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 </style>

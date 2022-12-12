@@ -1,6 +1,6 @@
 <template>
-  <div class="interaction-menu" :class="{menu_small: item.onQuickInventory}">
-    <my-button @click="moveItem">{{buttonText}}</my-button>
+  <div :class="interactionMenuClasses">
+    <my-button @click="moveItem">{{  buttonText  }}</my-button>
     <my-button @click="deleteItem">Delete item</my-button>
   </div>
 </template>
@@ -14,13 +14,20 @@ export default {
     },
   },
   computed: {
+    interactionMenuClasses() {
+      return [
+        "interaction-menu", 
+        {
+          "interaction-menu_small": this.item.onQuickInventory,
+          "interaction-menu_large": this.item.isEquip,
+        }
+      ]
+    },
     buttonText() {
       let result;
       if (this.item.quickStatus) {
         result = "To Quick Inventory";
-      } else if (this.item.onQuickInventory) {
-        result = "To Inventory";
-      } else if (this.item.isEquip) {
+      } else if (this.item.onQuickInventory || this.item.isEquip) {
         result = "To Inventory";
       } else if (!this.item.isEquip) {
         result = "Equip";
@@ -49,7 +56,7 @@ export default {
   width: 300px;
   height: 210px;
   background: #866241;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   position: absolute;
   left: 130px;
@@ -57,8 +64,13 @@ export default {
   z-index: 1;
 }
 
-.menu_small {
+.interaction-menu_small {
   left: 65px;
+  top: 20px;
+}
+
+.interaction-menu_large {
+  left: 72px;
   top: 20px;
 }
 </style>

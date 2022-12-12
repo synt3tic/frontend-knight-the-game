@@ -1,11 +1,14 @@
 <template>
   <div class="slot-container">
     <div
+      :class="slotSizeClasses"
       @click="openInteractionMenu"
-      class="slot"
-      :class="{slot_medium: mediumSlotSize, slot_small: smallSlotSize, slot_large: largeSlotSize}"
     >
-      <img :src="imageSource" alt="item-image" :class="{small: item.onQuickInventory}" />
+      <img 
+      :src="imageSource"
+      :class="{small: item.onQuickInventory}"
+      alt="item-image" 
+      />
     </div>
     <interaction-menu
       v-if="isInteractionMenuActive"
@@ -38,15 +41,14 @@ export default {
   },
 
   computed: {
-    smallSlotSize() {
-      return this.slotSize === "small" ? true : false;
+    slotSizeClasses() {
+      return ['slot', {
+        slot_medium: this.slotSize === "medium",
+        slot_small: this.slotSize === "small",
+        slot_large: this.slotSize === "large"
+      }]
     },
-    mediumSlotSize() {
-      return this.slotSize === "medium" ? true : false;
-    },
-    largeSlotSize() {
-      return this.slotSize === "large" ? true : false;
-    },
+
     imageSource() {
       let source;
       this.item.slotEmptyStatus
@@ -84,7 +86,7 @@ export default {
   align-items: center;
   justify-content: center;
   background: #f9c290;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
@@ -99,8 +101,8 @@ export default {
 }
 
 .slot_large {
-  width: 72px;
-  height: 145px;
+  width: 100px;
+  height: 200px;
 }
 
 .slot:hover {

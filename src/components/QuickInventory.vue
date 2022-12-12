@@ -1,13 +1,13 @@
 <template>
   <div class="quick-inventory">
     <h3 class="quick-inventory__header">Quick Inventory</h3>
-    <button @click="showModal" class="quick-inventory__button">?</button>
+    <button class="quick-inventory__button" @click="showModal">?</button>
     <div class="quick-inventory__slots">
       <inventory-slot
         v-for="item in quickInventorySlots"
         :key="item.id"
-        slotSize="small"
         :item="item"
+        slotSize="small"
         @moveItem="moveItem"
         @deleteItem="deleteItem"
       ></inventory-slot>
@@ -42,7 +42,7 @@ export default {
   width: 708px;
   height: 105px;
   background: #866241;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
@@ -53,14 +53,14 @@ export default {
   display: flex;
   align-items: center;
   color: #f9c290;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .quick-inventory__button {
   width: 34.5px;
   height: 34.5px;
   background: #f9c290;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 50%;
   border: none;
   font-family: "Alike Angular";

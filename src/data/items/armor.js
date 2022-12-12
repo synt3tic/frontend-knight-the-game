@@ -1,19 +1,29 @@
 export default {
-  defaultArmor: {
-    name: 'Default Armor',
+  knightsArmor: {
+    name: "Knights Armor",
     armor: 5,
     regeneration: 1,
-    imageUrl: '/icons/defaultArmor.png',
+    imageUrl: '/icons/knightsArmor.png',
     equipStatus: true,
     isEquip: false,
     quickStatus: false,
     index: 1,
   },
-  legendaryArmor: {
-    name: 'Legendary Armor',
+  executionersArmor: {
+    name: "Executioners Armor",
     armor: 10,
     regeneration: 3,
-    imageUrl: '/icons/legendaryArmor.png',
+    imageUrl: '/icons/executionersArmor.png',
+    equipStatus: true,
+    isEquip: false,
+    quickStatus: false,
+    index: 1,
+  },
+  kingArmor: {
+    name: "King Armor",
+    armor: 10,
+    regeneration: 3,
+    imageUrl: '/icons/kingArmor.png',
     equipStatus: true,
     isEquip: false,
     quickStatus: false,

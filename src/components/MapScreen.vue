@@ -2,7 +2,10 @@
   <div class="map-screen">
     <location-list @openModal="changeModalStatus" />
     <the-map>
-      <selected-location v-if="isModalActive" @hideModal="changeModalStatus" />
+      <selected-location 
+      v-if="isModalActive"
+      @hideModal="changeModalStatus"
+      />
     </the-map>
     <div class="map-screen__map-legend">
       <div v-for="(indicator, index) in indicatorColors" :key="index" class="map-legend__list">
@@ -72,7 +75,7 @@ export default {
   width: 284.11px;
   height: 877.5px;
   background: #7a5737;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
@@ -107,6 +110,6 @@ export default {
   font-weight: 400;
   font-size: 20px;
   color: #f9c290;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 </style>

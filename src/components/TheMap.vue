@@ -13,7 +13,7 @@ export default {};
   width: 1235.4px;
   height: 877.5px;
   background: url(../images/map.png);
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 15px;
 }
 </style>

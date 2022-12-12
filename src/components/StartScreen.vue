@@ -4,8 +4,12 @@
       FRONTEND KNIGHT
       <br />THE GAME
     </h1>
-    <img class="main__image" src="../images/start-page-image.png" alt="knight-image" />
-    <my-button @click="startGame" class="main__button">START</my-button>
+    <img 
+    class="main__image" 
+    src="../images/start-page-image.png" 
+    alt="knight-image" 
+    />
+    <my-button class="main__button" @click="startGame">START</my-button>
   </div>
 </template>
 
@@ -33,7 +37,7 @@ export default {
   font-weight: 400;
   font-size: 28px;
   line-height: 0%;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   padding-right: 90px;
   padding-left: 90px;
   color: #f9c290;
@@ -52,8 +56,8 @@ export default {
   width: 688px;
   height: 87px;
   background: rgba(117, 83, 52, 0.75);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 0px 0px 15px 15px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0px 0 15px 15px;
   font-size: 36px;
   font-weight: 400;
   color: #f9c290;
@@ -73,13 +77,13 @@ export default {
   font-weight: 400;
   font-size: 36px;
   color: #f9c290;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .main__image {
   width: 656px;
   height: 349px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .main__button {

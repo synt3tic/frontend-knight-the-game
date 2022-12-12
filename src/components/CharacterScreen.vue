@@ -4,15 +4,20 @@
       <h2 class="character-screen__header-text">Character</h2>
       <div class="character-container">
         <div class="character-container__character">
-          <the-character />
+          <img 
+            :src="imageSrc"
+            alt="character-image" 
+            class="character" 
+          />
         </div>
         <div class="character-container__equip">
           <inventory-slot
             v-for="item in characterEquipSlots"
             :key="item.id"
-            slotSize="large"
             :item="item"
+            slotSize="large"
             @moveItem="moveItem"
+            @deleteItem="deleteItem"
           />
         </div>
       </div>
@@ -29,8 +34,8 @@
         <inventory-slot
           v-for="item in inventorySlots"
           :key="item.id"
-          slotSize="medium"
           :item="item"
+          slotSize="medium"
           @moveItem="moveItem"
           @deleteItem="deleteItem"
         />
@@ -42,273 +47,247 @@
 <script>
 import QuickInventory from "@/components/QuickInventory.vue";
 import CharacterInformation from "@/components/CharacterInformation.vue";
-import TheCharacter from "@/components/TheCharacter.vue";
 import items from "@/data/items/items";
-import armor from "@/data/items/armor";
-import weapon from "@/data/items/weapons";
+import config from "@/data/config";
 import helpers from "@/utils/helpers";
 
 export default {
   data() {
     return {
-      inventorySlots: [
-        {
-          id: 1,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 2,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 3,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 4,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 5,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 6,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 7,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 8,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 9,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 10,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 11,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 12,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 13,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 14,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 15,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 16,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 17,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 18,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 19,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 20,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 21,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 22,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 23,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 24,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 25,
-          slotEmptyStatus: true,
-        },
-      ],
+      inventorySlots: [],
       characterEquipSlots: [
         {
           id: 1,
           slotEmptyStatus: true,
           damage: 0,
+          criticalDamage: 0,
+          armor: 0,
+          regeneration: 0,
         },
         {
           id: 2,
           slotEmptyStatus: true,
+          armor: 0,
+          regeneration: 0,
+          damage: 0,
+          criticalDamage: 0,
         },
       ],
-      quickInventorySlots: [
-        {
-          id: 1,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 2,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 3,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 4,
-          slotEmptyStatus: true,
-        },
-        {
-          id: 5,
-          slotEmptyStatus: true,
-        },
-      ],
+      quickInventorySlots: [],
     };
   },
-
+  
   mounted() {
+    this.inventorySlots = config.inventorySlots
+    this.quickInventorySlots = config.quickInventorySlots
+
     for (let i = 0; i < items.length; i++) {
       this.inventorySlots[i] = { ...this.inventorySlots[i], ...items[i].item };
       this.inventorySlots[i].slotEmptyStatus = false;
     }
-    this.characterEquipSlots = this.characterEquipSlots.map((el) => {
-      if (el.id === 2) {
-        el.slotEmptyStatus = false;
-        el = { ...el, ...armor.defaultArmor };
-        el.isEquip = true;
-        return el;
-      } else if (el.id === 1) {
-        el.slotEmptyStatus = false;
-        el = { ...el, ...weapon.defaultSword };
-        el.isEquip = true;
-        return el;
-      } else {
-        return el;
+
+    if(localStorage.inventoryList) {
+      this.inventorySlots = JSON.parse(localStorage.getItem("inventoryList"))
+    }
+    if(localStorage.quickInventoryList) {
+      this.quickInventorySlots = JSON.parse(localStorage.getItem("quickInventoryList"))
+    }
+    if(localStorage.characterEquipSlots) {
+      this.characterEquipSlots = JSON.parse(localStorage.getItem("characterEquipSlots"))
+    }
+  },
+  
+  computed: {
+    imageSrc() {
+      let result = ""
+      for (let i = 0; i < 3; i++) {
+        config.weaponList.forEach(el => {
+          if(this.checkEquipItems(el, config.armorList[i])){
+            result = helpers.getImgUrl(`/character/${config.coupleOfEquip[el + config.armorList[i]]}.png`)
+          } else {
+            const currentEquip = String(this.characterEquipSlots[0].name) + String(this.characterEquipSlots[1].name)
+            result = helpers.getImgUrl(`/character/${config.coupleOfEquip[currentEquip]}.png`)
+          }
+        })
       }
-    });
+      return result
+    }
   },
 
   methods: {
+    checkEquipItems(weapon, armor) {
+      return this.characterEquipSlots[0].name === weapon && this.characterEquipSlots[1].name === armor
+    },
+
+    newItem(item) {
+    return { ...item };
+    },
+
+    findEmptySlot(arr) {
+    return arr.find(el => el.slotEmptyStatus);
+    },
+
+    newEmptySlot(item) {
+      return {
+        id: item.id,
+        slotEmptyStatus: true,
+      }
+    },
+
+    moveItemToQuickInventory(item) {
+      const emptySlotId = this.findEmptySlot(this.quickInventorySlots).id
+      item.onQuickInventory = true;
+      item.quickStatus = false;
+      this.quickInventorySlots = this.quickInventorySlots.map((el) => {
+        if (el.id === emptySlotId) {
+          el = this.newItem(item);
+          el.id = emptySlotId;
+          return el;
+        } else {
+          return el;
+        }
+      });
+      this.inventorySlots = this.inventorySlots.map((el) => {
+        if (el.id === item.id) {
+          return (el = this.newEmptySlot(item));
+        } else {
+          return el;
+        }
+      });
+      helpers.putInLocalStorage("quickInventoryList", this.quickInventorySlots)
+      helpers.putInLocalStorage("inventoryList", this.inventorySlots)
+    },
+
+    moveItemFromQuickInventoryToInventory(item) {
+      const emptySlotId = this.findEmptySlot(this.inventorySlots).id
+      item.onQuickInventory = false;
+      item.quickStatus = true;
+      this.inventorySlots = this.inventorySlots.map((el) => {
+        if (el.id === emptySlotId) {
+          el = this.newItem(item);
+          el.id = emptySlotId;
+          return el;
+        } else {
+          return el;
+        }
+      });
+      this.quickInventorySlots = this.quickInventorySlots.map((el) => {
+        if (el.id === item.id) {
+          return (el = this.newEmptySlot(item));
+        } else {
+          return el;
+        }
+      });
+      helpers.putInLocalStorage("quickInventoryList", this.quickInventorySlots)
+      helpers.putInLocalStorage("inventoryList", this.inventorySlots)
+    },
+
+    equipWithAnItem(item) {
+      const emptySlotId = this.findEmptySlot(this.inventorySlots).id
+      item.isEquip = true;
+      this.inventorySlots = this.inventorySlots.map((el) => {
+      item.equipStatus = false;
+        if (el.id === item.id) {
+          return (el = this.newEmptySlot(item));
+        } else {
+          return el;
+        }
+      });
+      this.inventorySlots = this.inventorySlots.map((el) => {
+        if (el.id === emptySlotId) {
+          el = this.characterEquipSlots[item.index];
+          el.id = emptySlotId;
+          el.isEquip = false;
+          el.equipStatus = true;
+          return el;
+        } else {
+          return el;
+        }
+      });
+      this.characterEquipSlots[item.index] = item;
+      helpers.putInLocalStorage("characterEquipSlots", this.characterEquipSlots)
+      helpers.putInLocalStorage("inventoryList", this.inventorySlots)
+      
+    },
+
+    moveItemFromEquipToInventory(item) {
+      const emptySlotId = this.findEmptySlot(this.inventorySlots).id
+      this.inventorySlots = this.inventorySlots.map((el) => {
+        if (el.id === emptySlotId) {
+          el = this.newItem(item);
+          el.id = emptySlotId;
+          el.isEquip = false;
+          el.equipStatus = true;
+          return el;
+        } else {
+          return el;
+        }
+      });
+      this.characterEquipSlots[item.index] = {
+        id: [item.id],
+        slotEmptyStatus: true,
+        damage: 0,
+        criticalDamage: 0,
+        armor: 0,
+        regeneration: 0,
+      };
+      helpers.putInLocalStorage("characterEquipSlots", this.characterEquipSlots)
+      helpers.putInLocalStorage("inventoryList", this.inventorySlots)
+    },
+
+    deleteItemFromQuickInventory(item) {
+      this.quickInventorySlots = this.quickInventorySlots.map((el) => {
+          if (el.id === item.id) {
+            return (el = this.newEmptySlot(item));
+          } else {
+            return el;
+          }
+        });
+      helpers.putInLocalStorage("quickInventoryList", this.quickInventorySlots)
+    },
+
     moveItem(item) {
       if (item.quickStatus && !item.onQuickInventory) {
-        item.onQuickInventory = true;
-        item.quickStatus = false;
-        this.quickInventorySlots = this.quickInventorySlots.map((el) => {
-          if (el.id === helpers.findEmptySlot(this.quickInventorySlots).id) {
-            el = helpers.newItem(item);
-            el.id = helpers.findEmptySlot(this.quickInventorySlots).id;
-            return el;
-          } else {
-            return el;
-          }
-        });
-        this.inventorySlots = this.inventorySlots.map((el) => {
-          if (el.id === item.id) {
-            return (el = helpers.emptySlot(item));
-          } else {
-            return el;
-          }
-        });
+        this.moveItemToQuickInventory(item)
       } else if (item.onQuickInventory) {
-        item.onQuickInventory = false;
-        item.quickStatus = true;
-        this.inventorySlots = this.inventorySlots.map((el) => {
-          if (el.id === helpers.findEmptySlot(this.inventorySlots).id) {
-            el = helpers.newItem(item);
-            el.id = helpers.findEmptySlot(this.inventorySlots).id;
-            return el;
-          } else {
-            return el;
-          }
-        });
-        this.quickInventorySlots = this.quickInventorySlots.map((el) => {
-          if (el.id === item.id) {
-            return (el = helpers.emptySlot(item));
-          } else {
-            return el;
-          }
-        });
+        this.moveItemFromQuickInventoryToInventory(item)
       } else if (!item.isEquip) {
-        item.isEquip = true;
-        item.equipStatus = false;
-        this.inventorySlots = this.inventorySlots.map((el) => {
-          if (el.id === item.id) {
-            return (el = helpers.emptySlot(item));
-          } else {
-            return el;
-          }
-        });
-        this.inventorySlots = this.inventorySlots.map((el) => {
-          if (el.id === helpers.findEmptySlot(this.inventorySlots).id) {
-            el = this.characterEquipSlots[item.index];
-            el.id = helpers.findEmptySlot(this.inventorySlots).id;
-            el.isEquip = false;
-            el.equipStatus = true;
-            return el;
-          } else {
-            return el;
-          }
-        });
-        this.characterEquipSlots[item.index] = item;
+        this.equipWithAnItem(item)
       } else if (item.isEquip) {
-        this.inventorySlots = this.inventorySlots.map((el) => {
-          if (el.id === helpers.findEmptySlot(this.inventorySlots).id) {
-            el = helpers.newItem(item);
-            el.id = helpers.findEmptySlot(this.inventorySlots).id;
-            el.isEquip = false;
-            el.equipStatus = true;
-            return el;
-          } else {
-            return el;
-          }
-        });
-        this.characterEquipSlots[item.index] = {
-          id: 2,
-          slotEmptyStatus: true,
-        };
+        this.moveItemFromEquipToInventory(item)
       }
+    },
+
+    deleteItemFromEquipInventory(item) {
+      this.characterEquipSlots[item.index] = {
+        id: [item.id],
+        slotEmptyStatus: true,
+        damage: 0,
+        criticalDamage: 0,
+        armor: 0,
+        regeneration: 0,
+      };
+      helpers.putInLocalStorage("characterEquipSlots", this.characterEquipSlots)
+    },
+
+    deleteItemFromInventory(item) {
+      this.inventorySlots = this.inventorySlots.map((el) => {
+        if (el.id === item.id) {
+          return (el = this.newEmptySlot(item));
+        } else {
+          return el;
+        }
+      });
+      helpers.putInLocalStorage("inventorySlots", this.inventorySlots)
     },
 
     deleteItem(item) {
       if (item.onQuickInventory) {
-        this.quickInventorySlots = this.quickInventorySlots.map((el) => {
-          if (el.id === item.id) {
-            return (el = helpers.emptySlot(item));
-          } else {
-            return el;
-          }
-        });
+        this.deleteItemFromQuickInventory(item)
+      } else if (item.isEquip) {
+        this.deleteItemFromEquipInventory(item)
       } else {
-        this.inventorySlots = this.inventorySlots.map((el) => {
-          if (el.id === item.id) {
-            return (el = helpers.emptySlot(item));
-          } else {
-            return el;
-          }
-        });
+        this.deleteItemFromInventory(item)
       }
     },
   },
@@ -316,7 +295,6 @@ export default {
   components: {
     QuickInventory,
     CharacterInformation,
-    TheCharacter,
   },
 };
 </script>
@@ -336,7 +314,7 @@ export default {
   width: 877.5px;
   height: 883.5px;
   background: #7a5737;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   gap: 30px;
   color: #f9c290;
@@ -346,7 +324,7 @@ export default {
   margin: 30px 0 0 0;
   font-weight: 400;
   font-size: 36px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .character-container {
@@ -367,15 +345,19 @@ export default {
   border-radius: 15px;
 }
 
+.character {
+  height: 322px;
+}
+
 .character-container__equip {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 18px;
-  width: 208.5px;
+  width: 280px;
   height: 357px;
   background: #866241;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
