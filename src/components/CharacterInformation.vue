@@ -8,6 +8,14 @@
       <div>{{  info.name  }}</div>
       <div>{{  info.value  }}</div>
     </div>
+    <div 
+    v-for="(value, index) in characterProgress" 
+    :key="index" 
+    class="information-container__text"
+    >
+      <div>{{  value.name  }}</div>
+      <div>{{  value.value  }}</div>
+    </div>
   </div>
 </template>
 
@@ -22,16 +30,18 @@ export default {
   },
   data() {
     return {
+      characterProgress: [],
       characterInformation: [],
       characteristic: ['damage', 'armor', 'regeneration', 'criticalDamage'],
     };
   },
   mounted() {
     this.characterInformation = config.basicCharacterStats
+    this.characterProgress = config.characterProgress
   },
   methods: {
     calculateIncreasedCharacteristics(items) {
-      const updatedCharacterCharacteristics = [];
+      const updatedCharacterCharacteristics = {};
       items.forEach(el => {
         for (let key in el) {
           if (this.characteristic.includes(key)) {

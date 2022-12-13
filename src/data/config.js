@@ -21,6 +21,16 @@ export default {
       key: "criticalDamage"
     },
   ],
+  characterProgress: [
+    {
+      name: "Level",
+      value: 1,
+    },
+    {
+      name: "Experience",
+      value: 0,
+    },
+  ],
   inventorySlots: [
     {
       id: 1,
@@ -164,7 +174,7 @@ export default {
     },
   ],
   coupleOfEquip: {
-    "undefinedundefined": "character0",
+    "emptyempty": "character0",
     "Knights SpearKnights Armor": "character1",
     "Executioner's AxeKnights Armor": "character2",
     "King SwordKnights Armor": "character3",
@@ -174,15 +184,15 @@ export default {
     "Knights SpearKing Armor": "character7",
     "Executioner's AxeKing Armor": "character8",
     "King SwordKing Armor": "character9",
-    "Knights Spearundefined": "character10",
-    "Executioner's Axeundefined": "character11",
-    "King Swordundefined": "character12",
-    "undefinedKnights Armor": "character13",
-    "undefinedExecutioners Armor": "character14",
-    "undefinedKing Armor": "character15",
+    "Knights Spearempty": "character10",
+    "Executioner's Axeempty": "character11",
+    "King Swordempty": "character12",
+    "emptyKnights Armor": "character13",
+    "emptyExecutioners Armor": "character14",
+    "emptyKing Armor": "character15",
   },
   armorList: ["Knights Armor", "Executioners Armor", "King Armor"],
-  weaponList: ["Knights Spear", "Executioner's Axe", "King Sword"]
+  weaponList: ["Knights Spear", "Executioner's Axe", "King Sword"],
 }
 
 

@@ -1,12 +1,11 @@
 <template>
   <div class="map-screen">
-    <location-list @openModal="changeModalStatus" />
-    <the-map>
-      <selected-location 
+    <location-list @openModal="showModal" />
+    <selected-location 
       v-if="isModalActive"
-      @hideModal="changeModalStatus"
+      @hideModal="hideModal"
       />
-    </the-map>
+    <the-map />
     <div class="map-screen__map-legend">
       <div v-for="(indicator, index) in indicatorColors" :key="index" class="map-legend__list">
         <div
@@ -54,8 +53,11 @@ export default {
     };
   },
   methods: {
-    changeModalStatus() {
-      this.isModalActive = !this.isModalActive;
+    showModal() {
+      this.isModalActive = true;
+    },
+    hideModal() {
+      this.isModalActive = false;
     },
   },
 };
@@ -63,6 +65,7 @@ export default {
 
 <style scoped>
 .map-screen {
+  position: relative;
   display: flex;
   justify-content: center;
   margin-top: 38px;

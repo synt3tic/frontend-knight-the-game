@@ -58,6 +58,7 @@ export default {
       characterEquipSlots: [
         {
           id: 1,
+          name: "empty",
           slotEmptyStatus: true,
           damage: 0,
           criticalDamage: 0,
@@ -66,6 +67,7 @@ export default {
         },
         {
           id: 2,
+          name: "empty",
           slotEmptyStatus: true,
           armor: 0,
           regeneration: 0,
@@ -100,16 +102,8 @@ export default {
   computed: {
     imageSrc() {
       let result = ""
-      for (let i = 0; i < 3; i++) {
-        config.weaponList.forEach(el => {
-          if(this.checkEquipItems(el, config.armorList[i])){
-            result = helpers.getImgUrl(`/character/${config.coupleOfEquip[el + config.armorList[i]]}.png`)
-          } else {
-            const currentEquip = String(this.characterEquipSlots[0].name) + String(this.characterEquipSlots[1].name)
-            result = helpers.getImgUrl(`/character/${config.coupleOfEquip[currentEquip]}.png`)
-          }
-        })
-      }
+      const currentEquip = String(this.characterEquipSlots[0].name) + String(this.characterEquipSlots[1].name)
+      result = helpers.getImgUrl(`/character/${config.coupleOfEquip[currentEquip]}.png`)
       return result
     }
   },
@@ -120,11 +114,11 @@ export default {
     },
 
     newItem(item) {
-    return { ...item };
+      return { ...item };
     },
 
     findEmptySlot(arr) {
-    return arr.find(el => el.slotEmptyStatus);
+      return arr.find(el => el.slotEmptyStatus);
     },
 
     newEmptySlot(item) {
@@ -158,7 +152,7 @@ export default {
       helpers.putInLocalStorage("inventoryList", this.inventorySlots)
     },
 
-    moveItemFromQuickInventoryToInventory(item) {
+    moveItemToInventory(item) {
       const emptySlotId = this.findEmptySlot(this.inventorySlots).id
       item.onQuickInventory = false;
       item.quickStatus = true;
@@ -210,7 +204,7 @@ export default {
       
     },
 
-    moveItemFromEquipToInventory(item) {
+    takeOffEquip(item) {
       const emptySlotId = this.findEmptySlot(this.inventorySlots).id
       this.inventorySlots = this.inventorySlots.map((el) => {
         if (el.id === emptySlotId) {
@@ -224,6 +218,7 @@ export default {
         }
       });
       this.characterEquipSlots[item.index] = {
+        name: "empty",
         id: [item.id],
         slotEmptyStatus: true,
         damage: 0,
@@ -250,16 +245,17 @@ export default {
       if (item.quickStatus && !item.onQuickInventory) {
         this.moveItemToQuickInventory(item)
       } else if (item.onQuickInventory) {
-        this.moveItemFromQuickInventoryToInventory(item)
+        this.moveItemToInventory(item)
       } else if (!item.isEquip) {
         this.equipWithAnItem(item)
       } else if (item.isEquip) {
-        this.moveItemFromEquipToInventory(item)
+        this.takeOffEquip(item)
       }
     },
 
     deleteItemFromEquipInventory(item) {
       this.characterEquipSlots[item.index] = {
+        name: "empty",
         id: [item.id],
         slotEmptyStatus: true,
         damage: 0,

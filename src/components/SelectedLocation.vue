@@ -62,19 +62,19 @@ export default {
 
 <style scoped>
 .modal {
+  position: absolute;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  background: url(../images/map.png);
   border-radius: 15px;
+  z-index: 1;
+  top: 70px;
 }
 
 .modal__window {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 25px;
   width: 897px;
   height: 736px;
