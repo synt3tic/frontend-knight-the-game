@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import CharacterScreen from "@/components/CharacterScreen";
 import StartScreen from '@/components/StartScreen'
+import MapScreen from '@/components/MapScreen';
 
 const routes = [
   {
@@ -13,7 +14,11 @@ const routes = [
     name: 'CharacterScreen',
     component: CharacterScreen,
   },
-
+  {
+    path: '/map',
+    name: 'MapScreen',
+    component: MapScreen,
+  },
 ]
 
 const router = createRouter({

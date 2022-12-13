@@ -1,0 +1,32 @@
+export default {
+  knightsSpear: {
+    name: "Knights Spear",
+    damage: 15,
+    criticalDamage: 6,
+    imageUrl: '/icons/knightsSpear.png',
+    equipStatus: true,
+    isEquip: false,
+    quickStatus: false,
+    index: 0,
+  },
+  executionersAxe: {
+    name: "Executioner's Axe",
+    damage: 24,
+    criticalDamage: 15,
+    imageUrl: '/icons/executionersAxe.png',
+    equipStatus: true,
+    isEquip: false,
+    quickStatus: false,
+    index: 0,
+  },
+  kingSword: {
+    name: "King Sword",
+    damage: 36,
+    criticalDamage: 23,
+    imageUrl: '/icons/kingSword.png',
+    equipStatus: true,
+    isEquip: false,
+    quickStatus: false,
+    index: 0,
+  },
+}

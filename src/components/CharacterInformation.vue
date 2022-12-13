@@ -1,45 +1,77 @@
 <template>
-  <div class="info-block">
-    <div v-for="info in characterInformation" :key="info.name" class="text-info">
-      <div>{{info.name}}</div>
-      <div>{{info.value}}</div>
+  <div class="information-container">
+    <div
+    v-for="info in updateCurrentCharacteristics"
+    :key="info.name"
+    class="information-container__text"
+    >
+      <div>{{  info.name  }}</div>
+      <div>{{  info.value  }}</div>
+    </div>
+    <div 
+    v-for="(value, index) in characterProgress" 
+    :key="index" 
+    class="information-container__text"
+    >
+      <div>{{  value.name  }}</div>
+      <div>{{  value.value  }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import config from "@/data/config";
+
 export default {
+  props: {
+    equipItems: {
+      type: Array,
+    },
+  },
   data() {
     return {
-      characterInformation: [
-        {
-          name: "Damage",
-          value: 15,
-        },
-        {
-          name: "Armor",
-          value: 10,
-        },
-        {
-          name: "Regeneration",
-          value: 1,
-        },
-        {
-          name: "Critical Damage",
-          value: 5,
-        },
-        {
-          name: "Level",
-          value: 1,
-        },
-      ],
+      characterProgress: [],
+      characterInformation: [],
+      characteristic: ['damage', 'armor', 'regeneration', 'criticalDamage'],
     };
   },
-};
+  mounted() {
+    this.characterInformation = config.basicCharacterStats
+    this.characterProgress = config.characterProgress
+  },
+  methods: {
+    calculateIncreasedCharacteristics(items) {
+      const updatedCharacterCharacteristics = {};
+      items.forEach(el => {
+        for (let key in el) {
+          if (this.characteristic.includes(key)) {
+            if (key in updatedCharacterCharacteristics) {
+              updatedCharacterCharacteristics[key] += el[key];
+            } else {
+              updatedCharacterCharacteristics[key] = el[key];
+            }
+          }
+        }
+      });
+      return updatedCharacterCharacteristics;
+    },
+  },
+  computed: {
+    updateCurrentCharacteristics() {
+      const increasedCharacteristics = this.calculateIncreasedCharacteristics(this.equipItems)
+      return this.characterInformation.map(el => {
+        const currentIncreasedProperty = increasedCharacteristics[el.key];
+        const newCharacteristics =  {...el};
+        newCharacteristics.value += currentIncreasedProperty
+        return newCharacteristics
+      });
+    }
+  }
+}
 </script>
 
 <style scoped>
-.info-block {
+.information-container {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -47,19 +79,21 @@ export default {
   justify-content: center;
   width: 708px;
   height: 222px;
-  margin-top: 30px;
   background: #866241;
   box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
 
-.text-info {
+.information-container__text {
   display: flex;
   justify-content: space-between;
+  align-self: flex-start;
+  margin-left: 40px;
   gap: 40px;
   height: 46px;
   font-size: 20px;
-  width: 203.82px;
-  height: 45.54px;
+  width: 204px;
+  height: 46px;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 </style>

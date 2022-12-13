@@ -1,0 +1,32 @@
+export default {
+  knightsArmor: {
+    name: "Knights Armor",
+    armor: 5,
+    regeneration: 1,
+    imageUrl: '/icons/knightsArmor.png',
+    equipStatus: true,
+    isEquip: false,
+    quickStatus: false,
+    index: 1,
+  },
+  executionersArmor: {
+    name: "Executioners Armor",
+    armor: 10,
+    regeneration: 3,
+    imageUrl: '/icons/executionersArmor.png',
+    equipStatus: true,
+    isEquip: false,
+    quickStatus: false,
+    index: 1,
+  },
+  kingArmor: {
+    name: "King Armor",
+    armor: 10,
+    regeneration: 3,
+    imageUrl: '/icons/kingArmor.png',
+    equipStatus: true,
+    isEquip: false,
+    quickStatus: false,
+    index: 1,
+  },
+}

@@ -18,7 +18,11 @@ export default {
   font-family: "Alike Angular", normal;
   line-height: 0%;
   color: #7a5737;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-weight: 400;
+  font-size: 24px;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 260px;
+  height: 75px;
 }
 
 .button:hover {
