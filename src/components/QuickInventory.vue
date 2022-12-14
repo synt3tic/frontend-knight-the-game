@@ -74,6 +74,7 @@ export default {
   color: #f9c290;
   background: #866241;
   border: solid 1px #f9c290;
+  transition-duration: 200ms;
 }
 
 .quick-inventory__slots {

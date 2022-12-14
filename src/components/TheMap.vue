@@ -10,8 +10,9 @@ export default {};
 
 <style scoped>
 .map {
-  width: 1235.4px;
-  height: 877.5px;
+  position: relative;
+  width: 1235px;
+  height: 878px;
   background: url(../images/map.png);
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 15px;

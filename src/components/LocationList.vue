@@ -2,33 +2,32 @@
   <div class="main">
     <h2 class="main__header">Locations</h2>
     <div 
-    v-for="location in locationList" 
-    :key="location.id" 
-    class="main__location"
+      v-for="location in locations"
+      :key="location.id"
+      class="main__location"
+      @click="$emit('showModal', location)"
     >
-      <h3 class="location__text" @click="openLocation">{{  location.name  }}</h3>
-      <div class="location__indicator"></div>
+      <h3 class="location__text">{{  location.name  }}</h3>
+      <div :class="getIndicatorClasses(location)"></div>
     </div>
   </div>
 </template>
 
 <script>
-import locations from '@/data/locations';
 
 export default {
-  data() {
-    return {
-      locationList: [],
-    }
-  },
-  mounted() {
-    this.locationList = locations
-  },
-  methods: {
-    openLocation() {
-      this.$emit("openModal");
+  props: {
+    locations: {
+      type: Array,
     },
   },
+  methods: {
+    getIndicatorClasses(location) {
+      return ["location__indicator", {
+        location__indicator_passed: location.passedStatus
+      }]
+    }
+  }
 };
 </script>
 
@@ -37,11 +36,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 284.11px;
-  height: 877.5px;
+  gap: 3px;
+  width: 285px;
+  height: 878px;
   background: #7a5737;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
+  z-index: 2;
 }
 
 .main__header {
@@ -60,8 +61,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 249.72px;
-  height: 52.5px;
+  width: inherit;
+  width: 250px;
+  height: 53px;
+}
+
+.main__location:hover {
+  cursor: pointer;
+  background: rgba(134, 98, 65, 0.69);
+  transition-duration: 200ms;
+  width: inherit;
 }
 
 .location__text {
@@ -87,9 +96,5 @@ export default {
 
 .location__indicator_passed {
   background: #94ff41;
-}
-
-.location__indicator_legendary {
-  background: #ff4141;
 }
 </style>

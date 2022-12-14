@@ -1,21 +1,27 @@
 <template>
   <div class="map-screen">
-    <location-list @openModal="showModal" />
-    <selected-location 
-      v-if="isModalActive"
-      @hideModal="hideModal"
+    <location-list :locations="locations" @showModal="showModal" />
+    <the-map>
+      <location-modal
+        v-if="isModalActive"
+        :location="currentLocation"
+        @hideModal="hideModal"
       />
-    <the-map />
+      <div 
+        v-for="location in locations" 
+        :key="location.id"
+        :style="location.position"
+        class="locations-points"
+        @click="showModal(location)"
+      ></div>
+    </the-map>
     <div class="map-screen__map-legend">
-      <div v-for="(indicator, index) in indicatorColors" :key="index" class="map-legend__list">
-        <div
-          class="map-legend__indicator"
-          :class="{
-            'map-legend__indicator_passed': indicator.color === 'green', 
-            'map-legend__indicator_not-passed': indicator.color === 'yellow', 
-            'map-legend__indicator_legendary': indicator.color === 'red'
-            }"
-        ></div>
+      <div 
+        v-for="(indicator, index) in indicatorColors" 
+        :key="index" 
+        class="map-legend__list"
+      >
+        <div :class="getIndicatorsClasses(indicator)"></div>
         <h3 class="map-legend__text">{{indicator.title}}</h3>
       </div>
     </div>
@@ -25,47 +31,51 @@
 <script>
 import LocationList from "@/components/LocationList.vue";
 import TheMap from "@/components/TheMap.vue";
-import SelectedLocation from "@/components/SelectedLocation.vue";
+import locations from '@/data/locations';
+import LocationModal from "./LocationModal.vue";
+import config from "@/data/config";
 
 export default {
   components: {
     LocationList,
     TheMap,
-    SelectedLocation,
+    LocationModal,
   },
   data() {
     return {
-      indicatorColors: [
-        {
-          title: "Passed location",
-          color: "green",
-        },
-        {
-          title: "Location not passed",
-          color: "yellow",
-        },
-        {
-          title: "Legendary battle",
-          color: "red",
-        },
-      ],
+      indicatorColors: null,
       isModalActive: false,
+      currentLocation: null,
+      locations: null,
     };
   },
   methods: {
-    showModal() {
-      this.isModalActive = true;
+    showModal(location) {
+      this.isModalActive = true
+      this.currentLocation = location
     },
+
     hideModal() {
-      this.isModalActive = false;
+      this.isModalActive = false
+    },
+
+    getIndicatorsClasses(indicator) {
+      return ["map-legend__indicator", {
+        "map-legend__indicator_passed": indicator.color === 'green', 
+        "map-legend__indicator_not-passed": indicator.color === 'yellow', 
+        "map-legend__indicator_legendary": indicator.color === 'red'
+      }]
     },
   },
+  mounted() {
+    this.locations = locations
+    this.indicatorColors = config.indicatorsColors
+  }
 };
 </script>
 
 <style scoped>
 .map-screen {
-  position: relative;
   display: flex;
   justify-content: center;
   margin-top: 38px;
@@ -114,5 +124,26 @@ export default {
   font-size: 20px;
   color: #f9c290;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.map-legend__text:hover {
+  cursor: default;
+}
+
+.locations-points {
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  background: #FF9B41;
+  border: 1px solid #000000;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.locations-points:hover {
+  cursor: pointer;
+  background: #b86319;
+  transition-duration: 200ms;
 }
 </style>

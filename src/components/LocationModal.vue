@@ -1,11 +1,11 @@
 <template>
   <div class="modal" @click="hideModal">
-    <div @click.stop class="modal__window">
-      <h2 class="modal__header">Location 1</h2>
+    <div class="modal__window" @click.stop>
+      <h2 class="modal__header">{{  location.name  }}</h2>
       <div class="modal__location-description">
-        <img class="location__image" src="../images/background.png" alt="location-image" />
+        <img class="location__image" :src="locationImage" alt="location-image" />
         <div class="location__description">
-          <p class="description__text">Here is a description of the specific location.</p>
+          <p class="description__text">{{  location.description  }}</p>
         </div>
       </div>
       <div class="modal__location-info">
@@ -21,17 +21,24 @@
             </div>
             <div class="list__value">
               <h4
-                v-for="(header, index) in locationInfoValues"
+                v-for="(value, index) in locationInfoValues"
                 :key="index"
-                class="text"
-                :class="{ text__green: header === 'Easy' || header === 'Passed'}"
-              >{{header}}</h4>
+                :class="getTextClasses(value)"
+              >{{  value  }}</h4>
             </div>
           </div>
         </div>
-        <div class="location-info__opponents">
-          <h3 class="text__header">Opponents</h3>
-          <div class="opponents__images"></div>
+        <div class="location-info__enemies">
+          <h3 class="text__header">Enemies</h3>
+          <div
+          class="enemies__images"
+          >
+            <img 
+            v-for="(image, index) in location.enemiesImages" 
+            :key="index"
+            :src="getImageUrl(image)" 
+            alt="enemy-image" />
+          </div>
         </div>
       </div>
       <my-button class="modal__button">Start</my-button>
@@ -40,7 +47,14 @@
 </template>
 
 <script>
+import helpers from '@/utils/helpers';
+
 export default {
+  props: {
+    location: {
+      type: Object,
+    }
+  },
   data() {
     return {
       locationInfoHeaders: [
@@ -49,12 +63,39 @@ export default {
         "Number of opponents",
         "Status",
       ],
-      locationInfoValues: ["Easy", "1", "2", "Not Passed"],
     };
   },
   methods: {
     hideModal() {
       this.$emit("hideModal");
+    },
+    getImageUrl(imageSrc) {
+      return helpers.getImgUrl(imageSrc)
+    },
+    getTextClasses(value) {
+      return ["text", {
+        text_green: value === "Easy" || value === "Passed",
+        text_yellow: value === "Medium",
+        text_red: value === "Hard",
+      }]
+    }
+  },
+  computed: {
+    locationImage() {
+      return helpers.getImgUrl(this.location.imageUrl)
+    },
+    locationInfoValues() {
+      const values = [
+        this.location.difficult, 
+        this.location.recommendedLevel, 
+        this.location.numberOfEnemies,
+      ]
+      if(this.location.passedStatus){
+        values.push("Passed")
+      } else {
+        values.push("Not Passed")
+      }
+      return values
     },
   },
 };
@@ -62,12 +103,12 @@ export default {
 
 <style scoped>
 .modal {
-  position: absolute;
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
   border-radius: 15px;
-  z-index: 1;
-  top: 70px;
 }
 
 .modal__window {
@@ -87,6 +128,7 @@ export default {
   font-weight: 400;
   font-size: 32px;
   color: #f9c290;
+  margin: 0;
 }
 
 .modal__location-description {
@@ -95,6 +137,8 @@ export default {
 }
 
 .location__image {
+  width: 484px;
+  height: 272px;
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 15px;
 }
@@ -110,7 +154,7 @@ export default {
 
 .description__text {
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 120%;
   letter-spacing: 0.02em;
   color: #f9c290;
@@ -148,6 +192,7 @@ export default {
 
 .text__list {
   display: flex;
+  justify-content: space-between;
 }
 
 .list__header {
@@ -165,8 +210,17 @@ export default {
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.text__green {
+.text_green {
   color: #94ff41;
+}
+
+.text_yellow {
+  color: #ffdc41;
+}
+
+.text_red {
+  color: #ff4141;
+  
 }
 
 .list__value {
@@ -177,20 +231,22 @@ export default {
   text-align: end;
 }
 
-.location-info__opponents {
+.location-info__enemies {
+  display: flex;
+  flex-direction: column;
   width: 307.5px;
   height: 180px;
 }
-
-.opponents__images {
+.enemies__images {
   display: flex;
+  justify-content: center;
 }
 
 .modal__button {
   width: 240px;
   height: 52.5px;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 28px;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 </style>

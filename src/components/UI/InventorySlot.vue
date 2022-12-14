@@ -108,6 +108,7 @@ export default {
 .slot:hover {
   cursor: pointer;
   background: #c99668;
+  transition-duration: 200ms;
 }
 
 .small {
