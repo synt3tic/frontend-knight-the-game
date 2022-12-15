@@ -5,9 +5,9 @@
       @click="openInteractionMenu"
     >
       <img 
-      :src="imageSource"
-      :class="{small: item.onQuickInventory}"
-      alt="item-image" 
+        :src="imageSource"
+        :class="{small: item.onQuickInventory}"
+        alt="item-image" 
       />
     </div>
     <interaction-menu

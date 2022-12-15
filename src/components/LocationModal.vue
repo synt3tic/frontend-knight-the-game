@@ -30,14 +30,13 @@
         </div>
         <div class="location-info__enemies">
           <h3 class="text__header">Enemies</h3>
-          <div
-          class="enemies__images"
-          >
+          <div class="enemies__images">
             <img 
-            v-for="(image, index) in location.enemiesImages" 
-            :key="index"
-            :src="getImageUrl(image)" 
-            alt="enemy-image" />
+              v-for="(image, index) in location.enemiesImages" 
+              :key="index"
+              :src="getImageUrl(image)" 
+              alt="enemy-image" 
+            />
           </div>
         </div>
       </div>
@@ -154,7 +153,7 @@ export default {
 
 .description__text {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 120%;
   letter-spacing: 0.02em;
   color: #f9c290;

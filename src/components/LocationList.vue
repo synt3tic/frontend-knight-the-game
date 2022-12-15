@@ -4,7 +4,7 @@
     <div 
       v-for="location in locations"
       :key="location.id"
-      class="main__location"
+      :class="getLocationClasses(location)"
       @click="$emit('showModal', location)"
     >
       <h3 class="location__text">{{  location.name  }}</h3>
@@ -20,11 +20,19 @@ export default {
     locations: {
       type: Array,
     },
+    currentLocation: {
+      type: Object,
+    },
   },
   methods: {
     getIndicatorClasses(location) {
       return ["location__indicator", {
         location__indicator_passed: location.passedStatus
+      }]
+    },
+    getLocationClasses(location) {
+      return ["main__location", {
+        main__location_changed: location === this.currentLocation
       }]
     }
   }
@@ -64,12 +72,18 @@ export default {
   width: inherit;
   width: 250px;
   height: 53px;
+  transition-duration: 200ms;
 }
 
 .main__location:hover {
   cursor: pointer;
   background: rgba(134, 98, 65, 0.69);
   transition-duration: 200ms;
+  width: inherit;
+}
+
+.main__location_changed {
+  background: rgba(134, 98, 65, 0.69);
   width: inherit;
 }
 

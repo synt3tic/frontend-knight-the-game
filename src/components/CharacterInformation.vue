@@ -1,17 +1,17 @@
 <template>
   <div class="information-container">
     <div
-    v-for="info in updateCurrentCharacteristics"
-    :key="info.name"
-    class="information-container__text"
+      v-for="info in updateCurrentCharacteristics"
+      :key="info.name"
+      class="information-container__text"
     >
       <div>{{  info.name  }}</div>
       <div>{{  info.value  }}</div>
     </div>
     <div 
-    v-for="(value, index) in characterProgress" 
-    :key="index" 
-    class="information-container__text"
+      v-for="(value, index) in characterProgress" 
+      :key="index" 
+      class="information-container__text"
     >
       <div>{{  value.name  }}</div>
       <div>{{  value.value  }}</div>
