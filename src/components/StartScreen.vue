@@ -5,9 +5,9 @@
       <br />THE GAME
     </h1>
     <img 
-    class="main__image" 
-    src="../images/start-page-image.png" 
-    alt="knight-image" 
+      class="main__image" 
+      src="../images/start-page-image.png" 
+      alt="knight-image" 
     />
     <my-button class="main__button" @click="startGame">START</my-button>
   </div>

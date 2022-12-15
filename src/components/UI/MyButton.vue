@@ -30,5 +30,6 @@ export default {
   background: #7a5737;
   color: #f9c290;
   border: solid 1px #f9c290;
+  transition-duration: 300ms;
 }
 </style>

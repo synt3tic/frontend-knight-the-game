@@ -173,6 +173,16 @@ export default {
       slotEmptyStatus: true,
     },
   ],
+  indicatorsColors: [
+    {
+      title: "Passed location",
+      color: "green",
+    },
+    {
+      title: "Location not passed",
+      color: "yellow",
+    },
+  ],
   coupleOfEquip: {
     "emptyempty": "character0",
     "Knights SpearKnights Armor": "character1",

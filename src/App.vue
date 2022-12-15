@@ -55,6 +55,7 @@ body {
 
 .header__link:hover {
   color: #cf7523;
+  transition-duration: 200ms;
 }
 
 .header__name {

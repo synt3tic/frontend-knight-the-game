@@ -1,21 +1,24 @@
 <template>
   <div class="map-screen">
-    <location-list @openModal="showModal" />
-    <selected-location 
-      v-if="isModalActive"
+    <location-list 
+      :locations="locations"
+      @showModal="showModal"
+      :currentLocation="currentLocation"
+    />
+    <the-map 
+      :locations="locations" 
+      :isModalActive="isModalActive"
+      :currentLocation="currentLocation"
+      @showModal="showModal"
       @hideModal="hideModal"
-      />
-    <the-map />
+    />
     <div class="map-screen__map-legend">
-      <div v-for="(indicator, index) in indicatorColors" :key="index" class="map-legend__list">
-        <div
-          class="map-legend__indicator"
-          :class="{
-            'map-legend__indicator_passed': indicator.color === 'green', 
-            'map-legend__indicator_not-passed': indicator.color === 'yellow', 
-            'map-legend__indicator_legendary': indicator.color === 'red'
-            }"
-        ></div>
+      <div 
+        v-for="(indicator, index) in indicatorColors" 
+        :key="index" 
+        class="map-legend__list"
+      >
+        <div :class="getIndicatorsClasses(indicator)"></div>
         <h3 class="map-legend__text">{{indicator.title}}</h3>
       </div>
     </div>
@@ -25,47 +28,48 @@
 <script>
 import LocationList from "@/components/LocationList.vue";
 import TheMap from "@/components/TheMap.vue";
-import SelectedLocation from "@/components/SelectedLocation.vue";
+import locations from '@/data/locations';
+import config from "@/data/config";
 
 export default {
   components: {
     LocationList,
     TheMap,
-    SelectedLocation,
   },
   data() {
     return {
-      indicatorColors: [
-        {
-          title: "Passed location",
-          color: "green",
-        },
-        {
-          title: "Location not passed",
-          color: "yellow",
-        },
-        {
-          title: "Legendary battle",
-          color: "red",
-        },
-      ],
+      indicatorColors: null,
       isModalActive: false,
+      currentLocation: null,
+      locations: null,
     };
   },
   methods: {
-    showModal() {
-      this.isModalActive = true;
+    showModal(location) {
+      this.isModalActive = true
+      this.currentLocation = location
     },
     hideModal() {
-      this.isModalActive = false;
+      this.isModalActive = false
+      this.currentLocation = null
+    },
+    getIndicatorsClasses(indicator) {
+      return ["map-legend__indicator", {
+        "map-legend__indicator_passed": indicator.color === 'green', 
+        "map-legend__indicator_not-passed": indicator.color === 'yellow', 
+        "map-legend__indicator_legendary": indicator.color === 'red'
+      }]
     },
   },
+  mounted() {
+    this.locations = locations
+    this.indicatorColors = config.indicatorsColors
+  }
 };
 </script>
 
 <style scoped>
 .map-screen {
-  position: relative;
   display: flex;
   justify-content: center;
   margin-top: 38px;
@@ -114,5 +118,9 @@ export default {
   font-size: 20px;
   color: #f9c290;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.map-legend__text:hover {
+  cursor: default;
 }
 </style>
