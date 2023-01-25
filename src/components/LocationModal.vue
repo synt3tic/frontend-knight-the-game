@@ -32,15 +32,16 @@
           <h3 class="text__header">Enemies</h3>
           <div class="enemies__images">
             <img 
-              v-for="(image, index) in location.enemiesImages" 
+              v-for="(image, index) in enemiesImages"
               :key="index"
-              :src="getImageUrl(image)" 
-              alt="enemy-image" 
+              :src="getImageUrl(image)"
+              alt="enemy-image"
+              class="image"
             />
           </div>
         </div>
       </div>
-      <my-button class="modal__button">Start</my-button>
+      <my-button class="modal__button" @click="startGame">{{  buttonText  }}</my-button>
     </div>
   </div>
 </template>
@@ -77,6 +78,11 @@ export default {
         text_yellow: value === "Medium",
         text_red: value === "Hard",
       }]
+    },
+    startGame() {
+      helpers.putInLocalStorage("currentLocation", this.location)
+      this.$router.push("/battleground")
+      this.$emit("hideHeader")
     }
   },
   computed: {
@@ -95,6 +101,17 @@ export default {
         values.push("Not Passed")
       }
       return values
+    },
+    buttonText() {
+      return this.location.passedStatus ? "Start Again" : "Start"
+    },
+    enemiesImages() {
+      const enemiesImagesArray = []
+      enemiesImagesArray.push(this.location.enemies.firstEnemy.imageUrl)
+      if(this.location.enemies.secondEnemy) {
+        enemiesImagesArray.push(this.location.enemies.secondEnemy.imageUrl)
+      }
+      return enemiesImagesArray
     },
   },
 };
@@ -233,12 +250,18 @@ export default {
 .location-info__enemies {
   display: flex;
   flex-direction: column;
-  width: 307.5px;
+  width: 308px;
   height: 180px;
 }
 .enemies__images {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+  gap: 50px;
+}
+
+.image {
+  height: 110px;
 }
 
 .modal__button {

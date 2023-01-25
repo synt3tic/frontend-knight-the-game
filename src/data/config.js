@@ -11,25 +11,25 @@ export default {
       key: "armor"
     },
     {
-      name: "Regeneration",
-      value: 1,
-      key: "regeneration"
+      name: "Health Points",
+      value: 100,
+      key: "healthPoints"
     },
     {
       name: "Critical Damage",
       value: 5,
       key: "criticalDamage"
     },
-  ],
-  characterProgress: [
     {
-      name: "Level",
-      value: 1,
+      name: "Accuracy",
+      value: 80,
+      key: "accuracy"
     },
     {
-      name: "Experience",
-      value: 0,
-    },
+      name: "Miss Chance",
+      value: 10,
+      key: "missChance"
+    }
   ],
   inventorySlots: [
     {
@@ -136,19 +136,25 @@ export default {
   characterEquipSlots: [
     {
       id: 1,
+      name: "empty",
       slotEmptyStatus: true,
       damage: 0,
       criticalDamage: 0,
       armor: 0,
-      regeneration: 0,
+      healthPoints: 0,
+      accuracy: 0,
+      missChance: 0,
     },
     {
       id: 2,
+      name: "empty",
       slotEmptyStatus: true,
       armor: 0,
-      regeneration: 0,
+      healthPoints: 0,
       damage: 0,
       criticalDamage: 0,
+      accuracy: 0,
+      missChance: 0,
     },
   ],
   quickInventorySlots: [
@@ -203,6 +209,20 @@ export default {
   },
   armorList: ["Knights Armor", "Executioners Armor", "King Armor"],
   weaponList: ["Knights Spear", "Executioner's Axe", "King Sword"],
+  pauseModalContent: {
+    isVictoryModal: false,
+    title: "PAUSE",
+    buttonTextList: [
+      "Continue", "Restart", "Return to Main Menu"
+    ],
+  },
+  characterDiedModalContent: {
+    isVictoryModal: false,
+    title: "You Died",
+    buttonTextList: [
+      "Restart", "Return to Main Menu"
+    ],
+  },
 }
 
 

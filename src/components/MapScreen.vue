@@ -11,6 +11,7 @@
       :currentLocation="currentLocation"
       @showModal="showModal"
       @hideModal="hideModal"
+      @hideHeader="$emit('hideHeader')"
     />
     <div class="map-screen__map-legend">
       <div 

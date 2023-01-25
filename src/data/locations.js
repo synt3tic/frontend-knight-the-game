@@ -1,3 +1,8 @@
+import weapons from "./items/weapons"
+import armor from "./items/armor"
+import enemies from "./enemies"
+import items from "./items/items"
+
 export default [
   {
     id: 1,
@@ -6,10 +11,14 @@ export default [
     difficult: "Easy",
     recommendedLevel: 1,
     numberOfEnemies: 1,
-    passedStatus: true,
+    position: "bottom: 300px; left: 380px;",
+    passedStatus: false,
     imageUrl: "/locations/forest1.png",
-    enemiesImages: ["/enemies/enemy1.png"],
-    position: "bottom: 300px; left: 380px;"
+    enemies: {
+      firstEnemy: enemies.firstViking
+    },
+    droppedItems: [weapons.knightsSpear, armor.knightsArmor, items.healingPotion, items.attackPotion],
+    earnedExperience: 1400,
   },
   {
     id: 2,
@@ -18,10 +27,15 @@ export default [
     difficult: "Medium",
     recommendedLevel: 2,
     numberOfEnemies: 2,
+    position: "bottom: 380px; left: 480px;",
     passedStatus: false,
     imageUrl: "/locations/forest2.png",
-    enemiesImages: ["/enemies/enemy1.png", "/enemies/enemy2.png"],
-    position: "bottom: 380px; left: 480px;"
+    enemies: {
+      firstEnemy: enemies.firstViking,
+      secondEnemy: enemies.secondViking,
+    },
+    droppedItems: [weapons.executionersAxe, armor.executionersArmor, items.healingPotion, items.healingPotion, items.attackPotion],
+    earnedExperience: 1600,
   },
   {
     id: 3,
@@ -30,10 +44,15 @@ export default [
     difficult: "Hard",
     recommendedLevel: 3,
     numberOfEnemies: 2,
+    position: "bottom: 370px; right: 500px;",
     passedStatus: false,
     imageUrl: "/locations/forest3.png",
-    enemiesImages: ["/enemies/enemy1.png", "/enemies/enemy2.png"],
-    position: "bottom: 370px; right: 500px;"
+    enemies: {
+      firstEnemy: enemies.thirdViking,
+      secondEnemy: enemies.firstSamurai,
+    },
+    droppedItems: [weapons.kingSword, armor.kingArmor, items.healingPotion, items.attackPotion, items.healingPotion, items.healingPotion],
+    earnedExperience: 2000,
   },
   {
     id: 4,
@@ -42,9 +61,14 @@ export default [
     difficult: "Medium",
     recommendedLevel: 3,
     numberOfEnemies: 2,
+    position: "bottom: 270px; right: 600px;",
     passedStatus: false,
     imageUrl: "/locations/village1.png",
-    enemiesImages: ["/enemies/enemy1.png", "/enemies/enemy2.png"],
-    position: "bottom: 270px; right: 600px;"
+    enemies: {
+      firstEnemy: enemies.secondSamurai,
+      secondEnemy: enemies.thirdSamurai,
+    },
+    droppedItems: [items.healingPotion, items.attackPotion, items.healingPotion],
+    earnedExperience: 1000,
   }
 ]

@@ -1,17 +1,18 @@
 <template>
   <div class="map">
     <location-modal
-        v-if="isModalActive"
-        :location="currentLocation"
-        @hideModal="$emit('hideModal')"
-      />
-      <div 
-        v-for="location in locations" 
-        :key="location.id" 
-        :style="location.position"
-        class="map__locations-points"
-        @click="$emit('showModal', location)"
-      ></div>
+      v-if="isModalActive"
+      :location="currentLocation"
+      @hideModal="$emit('hideModal')"
+      @hideHeader="$emit('hideHeader')"
+    />
+    <div
+      v-for="location in locations"
+      :key="location.id"
+      :style="location.position"
+      :class="locationPointsClasses(location)"
+      @click="$emit('showModal', location)"
+    ></div>
   </div>
 </template>
 
@@ -31,8 +32,18 @@ export default {
     },
     currentLocation: {
       type: Object,
-    }
-  }
+    },
+  },
+  methods: {
+    locationPointsClasses(location) {
+      return [
+        "map__locations-points",
+        {
+          "map__locations-points_passed": location.passedStatus,
+        },
+      ];
+    },
+  },
 };
 </script>
 
@@ -50,11 +61,15 @@ export default {
   position: absolute;
   width: 21px;
   height: 21px;
-  background: #FF9B41;
+  background: #ff9b41;
   border: 1px solid #000000;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 50%;
   z-index: -1;
+}
+
+.map__locations-points_passed {
+  background: #94ff41;
 }
 
 .map__locations-points:hover {

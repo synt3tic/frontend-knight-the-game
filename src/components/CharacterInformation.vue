@@ -5,22 +5,24 @@
       :key="info.name"
       class="information-container__text"
     >
-      <div>{{  info.name  }}</div>
-      <div>{{  info.value  }}</div>
+      <div>{{ info.name }}</div>
+      <div>{{ info.value }}</div>
     </div>
-    <div 
-      v-for="(value, index) in characterProgress" 
-      :key="index" 
+    <div
+      v-for="(value, index) in characterProgress"
+      :key="index"
       class="information-container__text"
     >
-      <div>{{  value.name  }}</div>
-      <div>{{  value.value  }}</div>
+      <div>{{ value.name }}</div>
+      <div>{{ value.value }}</div>
     </div>
   </div>
 </template>
 
 <script>
 import config from "@/data/config";
+import helpers from "@/utils/helpers";
+import characterProgress from "@/data/characterProgress";
 
 export default {
   props: {
@@ -32,17 +34,25 @@ export default {
     return {
       characterProgress: [],
       characterInformation: [],
-      characteristic: ['damage', 'armor', 'regeneration', 'criticalDamage'],
+      characteristic: [
+        "damage",
+        "armor",
+        "healthPoints",
+        "criticalDamage",
+        "accuracy",
+        "missChance",
+      ],
     };
   },
   mounted() {
-    this.characterInformation = config.basicCharacterStats
-    this.characterProgress = config.characterProgress
+    this.characterInformation = config.basicCharacterStats;
+    this.characterProgress = characterProgress;
+    this.calculateCharacterProgress()
   },
   methods: {
-    calculateIncreasedCharacteristics(items) {
+    calculateСhangedCharacteristics(items) {
       const updatedCharacterCharacteristics = {};
-      items.forEach(el => {
+      items.forEach((el) => {
         for (let key in el) {
           if (this.characteristic.includes(key)) {
             if (key in updatedCharacterCharacteristics) {
@@ -55,19 +65,31 @@ export default {
       });
       return updatedCharacterCharacteristics;
     },
+    calculateCharacterProgress() {
+      if(characterProgress[1].value >= 1000) {
+        characterProgress[0].value += 1
+        characterProgress[1].value -= 1000
+      }
+    }
   },
   computed: {
     updateCurrentCharacteristics() {
-      const increasedCharacteristics = this.calculateIncreasedCharacteristics(this.equipItems)
-      return this.characterInformation.map(el => {
-        const currentIncreasedProperty = increasedCharacteristics[el.key];
-        const newCharacteristics =  {...el};
-        newCharacteristics.value += currentIncreasedProperty
-        return newCharacteristics
-      });
-    }
-  }
-}
+      const increasedCharacteristics = this.calculateСhangedCharacteristics(
+        this.equipItems
+      );
+      const updatedCharacterInformation = this.characterInformation.map(
+        (el) => {
+          const currentIncreasedProperty = increasedCharacteristics[el.key];
+          const newCharacteristics = { ...el };
+          newCharacteristics.value += currentIncreasedProperty;
+          return newCharacteristics;
+        }
+      );
+      helpers.putInLocalStorage("characteristics", updatedCharacterInformation);
+      return updatedCharacterInformation;
+    },
+  },
+};
 </script>
 
 <style scoped>

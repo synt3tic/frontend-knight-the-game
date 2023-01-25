@@ -59,18 +59,18 @@ export default {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   position: absolute;
-  left: 130px;
+  right: 130px;
   top: 50px;
   z-index: 1;
 }
 
 .interaction-menu_small {
-  left: 65px;
+  right: 65px;
   top: 20px;
 }
 
 .interaction-menu_large {
-  left: 72px;
+  right: 72px;
   top: 20px;
 }
 </style>
