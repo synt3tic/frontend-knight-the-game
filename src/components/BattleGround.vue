@@ -20,9 +20,10 @@
       :class="pauseButtonClasses"
       @click="changePauseModalStatus"
     />
-    <h2 v-show="isAttackPotionBeenUsed" class="battleground__boost-indicator">
-      Attack Boost for 3 seconds
-    </h2>
+    <h2
+      v-show="isAttackPotionBeenUsed"
+      class="battleground__boost-indicator"
+    >Attack Boost for 3 seconds</h2>
     <game-hud
       :itemBeenUsed="isAttackPotionBeenUsed"
       :currentHealthPoints="currentHealthPoints"
@@ -32,33 +33,27 @@
       <div class="characters">
         <div class="characters__attack-status">
           {{
-            attackStatusText(
-              currentDamageReceived,
-              isHeroAttacked,
-              isEnemyCriticalDamageDealt
-            )
+          attackStatusText(
+          currentDamageReceived,
+          isHeroAttacked,
+          isEnemyCriticalDamageDealt
+          )
           }}
         </div>
         <div
           :style="healthBarColor(healthPointsValue, currentHealthPoints)"
           class="characters__health-bar"
-        >
-          {{ heroHealthPoints }}
-        </div>
-        <img
-          :src="characterImageSrc"
-          alt="character-image"
-          :class="characterImageClasses"
-        />
+        >{{ heroHealthPoints }}</div>
+        <img :src="characterImageSrc" alt="character-image" :class="characterImageClasses" />
       </div>
       <div class="characters">
         <div class="characters__attack-status">
           {{
-            attackStatusText(
-              currentDamageDealt,
-              isEnemyAttacked,
-              isHeroCriticalDamageDealt
-            )
+          attackStatusText(
+          currentDamageDealt,
+          isEnemyAttacked,
+          isHeroCriticalDamageDealt
+          )
           }}
         </div>
         <div
@@ -66,15 +61,8 @@
             healthBarColor(enemyHealthPointsValue, currentEnemyHealthPoint)
           "
           class="characters__health-bar"
-        >
-          {{ enemyHealthPoints }}
-        </div>
-        <img
-          :src="enemyImageSrc"
-          alt="enemy-image"
-          :class="enemyImageClasses"
-          @click="attackEnemy"
-        />
+        >{{ enemyHealthPoints }}</div>
+        <img :src="enemyImageSrc" alt="enemy-image" :class="enemyImageClasses" @click="attackEnemy" />
         <p v-if="isEnemyAttacked" class="characters__wait-attack">WAIT</p>
       </div>
     </div>
@@ -289,7 +277,10 @@ export default {
         );
         this.currentEnemyHealthPoint -= this.currentDamageDealt;
         if (this.currentEnemyHealthPoint <= 0) {
-          if (this.currentStage < 2 && this.currentLocation.enemies.secondEnemy) {
+          if (
+            this.currentStage < 2 &&
+            this.currentLocation.enemies.secondEnemy
+          ) {
             this.currentEnemyHealthPoint = 0;
             this.timerStatus = true;
             this.timerValue = 3;
@@ -381,8 +372,10 @@ export default {
   flex-direction: column-reverse;
   align-items: center;
   position: relative;
-  width: 1920px;
-  height: 1080px;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .battleground__timer {
@@ -438,7 +431,6 @@ export default {
 
 .battleground__characters {
   display: flex;
-  gap: 150px;
 }
 
 .characters {
@@ -448,36 +440,88 @@ export default {
 }
 
 .character__image {
-  transition-duration: 100ms;
-  height: 500px;
+  width: 60%;
+}
+
+@keyframes character-attacked {
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }
 
 .character__image_attacked {
-  transition-duration: 100ms;
-  transform: rotate(-4deg);
+  animation: character-attacked .2s ease-in-out;
 }
 
 .character__image_died {
-  transition-duration: 100ms;
-  position: absolute;
-  bottom: 0;
-  transform: rotate(-90deg);
+  animation: character-died .3s ease-in-out;
+  width: 60%;
+  transform: rotate(-90deg) translateX(-35px) translateY(-50px);
+}
+
+@keyframes character-died {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
 }
 
 .enemy__image {
-  height: 500px;
+  width: 60%;
   transform: scale(-1, 1);
+  transition: all .1s ease-in-out;
 }
 
 .enemy__image_attacked {
-  transition-duration: 100ms;
+  animation: enemy-attacked .2s ease-in-out;
   transform: scale(-1, 1) rotate(-4deg);
 }
 
+@keyframes enemy-attacked {
+  0% {
+    transform: scale(-1, 1) rotate(0);
+  }
+  25% {
+    transform: scale(-1, 1) rotate(-4deg);
+  }
+  50% {
+    transform: scale(-1, 1) rotate(0deg);
+  }
+  75% {
+    transform: scale(-1, 1) rotate(4deg);
+  }
+  100% {
+    transform: scale(-1, 1) rotate(0);
+  }
+}
+
 .enemy__image_died {
-  position: absolute;
-  bottom: 0;
-  transform: scale(-1, 1) rotate(-90deg);
+  animation: enemy-died .3s ease-in-out;
+  width: 60%;
+  transform: scale(-1, 1) rotate(-90deg) translateX(-65px);
+}
+
+@keyframes enemy-died {
+  0% {
+    transform: scale(-1, 1) rotate(0);
+  }
+  100% {
+    transform: scale(-1, 1) rotate(-90deg);
+  }
 }
 
 .enemy__image:hover {

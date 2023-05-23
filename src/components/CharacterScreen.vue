@@ -349,8 +349,9 @@ export default {
 .character-screen {
   display: flex;
   justify-content: center;
-  margin-top: 54px;
-  gap: 54px;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 32px;
 }
 
 .character-screen__container {

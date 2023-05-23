@@ -114,9 +114,10 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 1080px;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   z-index: 5;
+  padding: 0 15px;
 }
 
 .modal__window {
@@ -124,7 +125,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1085px;
+  width: fit-content;
   background: rgba(175, 148, 132, 0.95);
   border-radius: 15px;
   gap: 15px;
@@ -140,18 +141,21 @@ export default {
 
 .window__content {
   display: flex;
-  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
 }
 
 .content__items-received {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 15px;
   padding: 30px;
-  width: 735px;
   background: rgba(122, 87, 55, 0.6);
   border-radius: 15px;
+  width: 100%;
 }
 
 .items-received__header {
@@ -164,14 +168,15 @@ export default {
 
 .items-received__items {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  justify-content: start;
   gap: 15px;
 }
 
 .content__buttons {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 30px;
 }
 </style>

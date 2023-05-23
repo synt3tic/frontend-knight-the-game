@@ -9,7 +9,7 @@
     </div>
     <transition name="slide">
       <interaction-menu
-        v-if="isInteractionMenuActive"
+        v-show="isInteractionMenuActive"
         :item="item"
         @moveItem="moveItem"
         @deleteItem="deleteItem"
@@ -184,13 +184,13 @@ export default {
   width: 140px;
 }
 
-.slide-enter, .slide-leave-to {
+.slide-enter-from,
+.slide-leave-to {
   transform: translateX(50px);
   opacity: 0;
 }
-.slide-enter-active, .slide-leave-active {
-  transition: all .5s;
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s;
 }
-/* .slide-enter-to
-.slide-leave */
 </style>
