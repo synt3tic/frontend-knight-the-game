@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import CharacterScreen from "@/components/CharacterScreen";
 import StartScreen from '@/components/StartScreen'
 import MapScreen from '@/components/MapScreen';
+import BattleGround from '@/components/BattleGround'
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     name: 'MapScreen',
     component: MapScreen,
   },
+  {
+    path: '/battleground',
+    name: 'BattleGround',
+    component: BattleGround,
+  }
 ]
 
 const router = createRouter({

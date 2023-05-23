@@ -1,24 +1,28 @@
 <template>
-  <header class="header" v-if="isStartGame">
+  <header class="header" v-if="headerVisibleStatus">
     <router-link class="header__link" to="/character">Character</router-link>
     <div>
       <h1 class="header__name">Frontend Knight</h1>
     </div>
     <router-link class="header__link" to="/map">Map</router-link>
   </header>
-  <router-view @startGame="startTheGame"></router-view>
+  <router-view 
+    @startGame="changeHeaderVisibleStatus" 
+    @hideHeader="changeHeaderVisibleStatus"
+    @showHeader="changeHeaderVisibleStatus"
+  />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      isStartGame: false,
+      headerVisibleStatus: false,
     };
   },
   methods: {
-    startTheGame() {
-      this.isStartGame = true;
+    changeHeaderVisibleStatus() {
+      this.headerVisibleStatus = !this.headerVisibleStatus;
     },
   },
 };
