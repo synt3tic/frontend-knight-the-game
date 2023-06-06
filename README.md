@@ -1,4 +1,4 @@
-# frontend_knight
+[Frontend Knight The Game](https://synt3tic.github.io/frontend-knight-the-game/).
 
 ## Project setup
 ```
@@ -18,7 +18,3 @@ npm run build
 ### Lints and fixes files
 ```
 npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
